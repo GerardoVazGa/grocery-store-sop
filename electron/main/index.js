@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron"
 import { paths } from "../configs/paths.js"
 import { DEV_SERVER_URL } from "../configs/env.js"
+import '../db/connection.js'
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
