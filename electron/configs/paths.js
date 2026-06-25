@@ -11,6 +11,7 @@ export const paths = {
     projectRoot,
     envFile: path.resolve(projectRoot, '.env'),
     preload: path.resolve(__dirname, '../preload/preload.js'),
-    distIndex: path.resolve(__dirname, '../../dist/index.html')
+    distIndex: path.resolve(__dirname, '../../dist/index.html'),
+    migrations: path.resolve(__dirname, '../db/migrations'),
 
 }
