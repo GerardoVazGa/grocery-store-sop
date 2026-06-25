@@ -10,7 +10,7 @@ export const paths = {
     electronRoot: path.resolve(__dirname, '..'),
     projectRoot,
     envFile: path.resolve(projectRoot, '.env'),
-    preload: path.resolve(__dirname, 'preload.js'),
+    preload: path.resolve(__dirname, '../preload/preload.js'),
     distIndex: path.resolve(__dirname, '../../dist/index.html')
 
 }
