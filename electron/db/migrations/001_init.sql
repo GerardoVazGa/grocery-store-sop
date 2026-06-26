@@ -28,7 +28,7 @@ CREATE INDEX IF NOT EXISTS idx_brands_category ON brands(category_id);
 INSERT OR IGNORE INTO categories (name) VALUES
     ('Refrescos'), ('Cerveza'), ('Cigarros'), ('Abarrotes'), ('Otros');
 
-INSERT INTO brands (name, category_id)
+INSERT OR IGNORE INTO brands (name, category_id)
 SELECT 'Coca-Cola', id FROM categories WHERE name = 'Refrescos'
 UNION ALL SELECT 'Pepsi', id FROM categories WHERE name = 'Refrescos'
 UNION ALL SELECT 'Sprite', id FROM categories WHERE name = 'Refrescos'
