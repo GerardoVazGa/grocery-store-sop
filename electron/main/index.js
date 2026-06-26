@@ -2,6 +2,7 @@ import { app, BrowserWindow } from "electron"
 import { paths } from "../configs/paths.js"
 import { DEV_SERVER_URL } from "../configs/env.js"
 import '../db/connection.js'
+import { registerProductsHandlers } from "../features/products/products.handlers.js"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -24,7 +25,10 @@ function createWindow() {
     }
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+    registerProductsHandlers()
+    createWindow()
+})
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
