@@ -7,5 +7,12 @@ contextBridge.exposeInMainWorld("api", {
         findById: (id) => ipcRenderer.invoke("products:findById", id),
         create: (product) => ipcRenderer.invoke("products:create", product),
         update: (id, product) => ipcRenderer.invoke("products:update", id, product)
+    },
+    categories: {
+        getAll: () => ipcRenderer.invoke("categories:getAll")
+    },
+    brands: {
+        getAll: () => ipcRenderer.invoke("brands:getAll"),
+        getByCategory: (categoryId) => ipcRenderer.invoke("brands:getByCategory", categoryId)
     }
 })
