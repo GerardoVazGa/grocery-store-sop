@@ -3,6 +3,8 @@ import { paths } from "../configs/paths.js"
 import { DEV_SERVER_URL } from "../configs/env.js"
 import '../db/connection.js'
 import { registerProductsHandlers } from "../features/products/products.handlers.js"
+import { registerBrandsHandlers } from "../features/brands/brands.handlers.js"
+import { registerCategoriesHandlers } from "../features/categories/categories.handlers.js"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -27,6 +29,8 @@ function createWindow() {
 
 app.whenReady().then(() => {
     registerProductsHandlers()
+    registerCategoriesHandlers()
+    registerBrandsHandlers()
     createWindow()
 })
 
