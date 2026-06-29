@@ -3,7 +3,7 @@ export function getAllCategories(db) {
         `
             SELECT 
                 categories.id,
-                categories.name,
+                categories.name
             FROM categories
             ORDER BY categories.name
         `
