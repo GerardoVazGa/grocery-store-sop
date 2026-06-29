@@ -13,10 +13,13 @@
     "electron:build": "npm run build && electron-builder"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
     "better-sqlite3": "^12.11.1",
     "dotenv": "^17.4.2",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "react-hook-form": "^7.80.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@electron/rebuild": "^4.0.4",
