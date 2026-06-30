@@ -2,11 +2,13 @@ import { ipcMain } from 'electron'
 import db from '../../db/connection.js'
 import {
     getAllProducts,
-    createProduct,
     findProductByBarCode,
     findProductById,
-    updateProduct
 } from './products.repository.js'
+import { 
+    createProductService, 
+    updateProductService 
+} from './products.services.js'
 
 export function registerProductsHandlers() {
     ipcMain.handle("products:getAll", () => {
@@ -22,10 +24,10 @@ export function registerProductsHandlers() {
     })
 
     ipcMain.handle("products:create", (event, product) => {
-        return createProduct(db, product)
+        return createProductService(db, product)
     })
 
     ipcMain.handle("products:update", (event, id, product) => {
-        return updateProduct(db, id, product)
+        return updateProductService(db, id, product)
     })
 }
