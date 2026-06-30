@@ -5,7 +5,7 @@ import { createProduct, findProductByBarCode, updateProduct } from "./products.r
 function validateProduct(db, product, productIdBeingUpdated = null) {
     const { barcode, name, categoryId, brandId, price, cost, stock } = product
 
-    if(!name || name.trim().length === 0) {
+    if(!name || name?.trim().length === 0) {
         throw new Error("El nombre del producto es requerido")
     }
 
@@ -22,10 +22,10 @@ function validateProduct(db, product, productIdBeingUpdated = null) {
     }
 
 
-    const barcodeClean = barcode.trim() || null
+    const barcodeClean = barcode?.trim() || null
 
     if(barcodeClean) {
-        const exist = findProductByBarCode(barcodeClean)
+        const exist = findProductByBarCode(db, barcodeClean)
 
         if(exist && exist.id !== productIdBeingUpdated) {
             throw new Error(`Ya existe un producto con el código de barras ${barcodeClean}`)
