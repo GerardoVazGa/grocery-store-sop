@@ -1,0 +1,7 @@
+{
+    "watch": [
+        "electron"
+    ],
+    "ext": "js,mjs,json",
+    "exec": "npx electron ."
+}
