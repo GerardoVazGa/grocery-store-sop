@@ -24,3 +24,16 @@ export function getBrandsByCategory(db, categoryId) {
         `
     ).all(categoryId)
 }
+
+export function findBrandById(db, id) {
+    return db.prepare(
+        `
+            SELECT 
+                brands.id,
+                brands.name,
+                brands.category_id AS categoryId
+            FROM brands
+            WHERE brands.id = ?
+        `
+    ).get(id)
+}
