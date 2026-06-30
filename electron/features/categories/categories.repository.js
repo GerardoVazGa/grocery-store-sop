@@ -9,3 +9,15 @@ export function getAllCategories(db) {
         `
     ).all()
 }
+
+export function findCategoryById(db, id) {
+    return db.prepare(
+        `
+            SELECT 
+                categories.id,
+                categories.name
+            FROM categories
+            WHERE categories.id = ?
+        `
+    ).get(id)
+}
