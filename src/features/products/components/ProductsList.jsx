@@ -1,12 +1,4 @@
-import { useProducts } from "../hooks/useProducts"
-
-export function ProductsList() {
-    const {
-        products,
-        isLoading
-    } = useProducts()
-
-    if (isLoading) return <p>Cargando productos...</p>
+export function ProductsList({ products = [] }) {
 
     return (
         <ul>
