@@ -5,6 +5,7 @@ import '../db/connection.js'
 import { registerProductsHandlers } from "../features/products/products.handlers.js"
 import { registerBrandsHandlers } from "../features/brands/brands.handlers.js"
 import { registerCategoriesHandlers } from "../features/categories/categories.handlers.js"
+import { registerSalesHandlers } from "../features/sales/sales.handlers.js"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -31,6 +32,7 @@ app.whenReady().then(() => {
     registerProductsHandlers()
     registerCategoriesHandlers()
     registerBrandsHandlers()
+    registerSalesHandlers()
     createWindow()
 })
 

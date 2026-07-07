@@ -14,5 +14,10 @@ contextBridge.exposeInMainWorld("api", {
     brands: {
         getAll: () => ipcRenderer.invoke("brands:getAll"),
         getByCategory: (categoryId) => ipcRenderer.invoke("brands:getByCategory", categoryId)
+    },
+    sales: {
+        create: (saleData) => ipcRenderer.invoke("sales:create", saleData),
+        getAll: () => ipcRenderer.invoke("sales:getAll"),
+        getById: (saleId) => ipcRenderer.invoke("sales:getById", saleId)
     }
 })
