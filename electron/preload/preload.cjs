@@ -19,5 +19,14 @@ contextBridge.exposeInMainWorld("api", {
         create: (saleData) => ipcRenderer.invoke("sales:create", saleData),
         getAll: () => ipcRenderer.invoke("sales:getAll"),
         getById: (saleId) => ipcRenderer.invoke("sales:getById", saleId)
+    },
+    cashCuts: {
+        getSummary: () => ipcRenderer.invoke("cashCuts:getSummary")
+    },
+    reports: {
+        getDailySummary: () => ipcRenderer.invoke("reports:getDailySummary"),
+        getTopProductsByCategory: () => ipcRenderer.invoke("reports:getTopProductsByCategory"),
+        getSalesByCategory: () => ipcRenderer.invoke("reports:getSalesByCategory"),
+        getSalesByBrand: () => ipcRenderer.invoke("reports:getSalesByBrand")
     }
 })
