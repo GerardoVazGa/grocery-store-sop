@@ -6,6 +6,8 @@ import { registerProductsHandlers } from "../features/products/products.handlers
 import { registerBrandsHandlers } from "../features/brands/brands.handlers.js"
 import { registerCategoriesHandlers } from "../features/categories/categories.handlers.js"
 import { registerSalesHandlers } from "../features/sales/sales.handlers.js"
+import { registerCashCutsHandlers } from "../features/cashCuts/cashCuts.handlers.js"
+import { registerReportsHandlers } from "../features/reports/reports.handlers.js"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -33,6 +35,8 @@ app.whenReady().then(() => {
     registerCategoriesHandlers()
     registerBrandsHandlers()
     registerSalesHandlers()
+    registerCashCutsHandlers()
+    registerReportsHandlers()
     createWindow()
 })
 
