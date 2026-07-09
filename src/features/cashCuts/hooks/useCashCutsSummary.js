@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { cashCutsApi } from "../api/cashCuts.api";
 
 export function useCashCutsSummary() {
-    const [cashCutsSummary, setCashCutsSummary] = useState([]);
+    const [cashCutsSummary, setCashCutsSummary] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
