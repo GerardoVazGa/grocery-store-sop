@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { getDailySummary, getSalesByBrand, getSalesByCategory, getTopProductsByCategory } from "./reports.repository.js";
+import { getDailySummary, getSalesByCategory, getSalesByCategoryAndBrand, getTopProductsByCategory,  } from "./reports.repository.js";
 import db from "../../db/connection.js";
 
 export function registerReportsHandlers() {
@@ -15,7 +15,7 @@ export function registerReportsHandlers() {
         return getSalesByCategory(db)
     })
 
-    ipcMain.handle("reports:getSalesByBrand", () => {
-        return getSalesByBrand(db)
+    ipcMain.handle("reports:getSalesByCategoryAndBrand", () => {
+        return getSalesByCategoryAndBrand(db)
     })
 }

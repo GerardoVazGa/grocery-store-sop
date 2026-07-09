@@ -49,22 +49,22 @@ export function getSalesByCategory(db) {
     ).all()
 }
 
-export function getSalesByBrand(db) {
+export function getSalesByCategoryAndBrand(db) {
     return db.prepare(`
         SELECT
-            brands.id as brandId,
-            brands.name as brandName,
             categories.id as categoryId,
             categories.name as categoryName,
+            brands.id as brandId,
+            brands.name as brandName,
             COUNT(DISTINCT sales.id) as totalSales,
             SUM(sale_items.quantity) as totalQuantity,
             ROUND(SUM(sale_items.subtotal), 2) as totalRevenue
         FROM sale_items
-        LEFT JOIN products ON products.id = sale_items.product_id
+        JOIN products ON products.id = sale_items.product_id
         LEFT JOIN brands ON brands.id = products.brand_id
-        LEFT JOIN categories ON categories.id = products.category_id
-        LEFT JOIN sales ON sales.id = sale_items.sale_id
-        GROUP BY brands.id
+        JOIN categories ON categories.id = products.category_id
+        JOIN sales ON sales.id = sale_items.sale_id
+        GROUP BY brands.id, categories.id
         ORDER BY categories.name, totalRevenue DESC
     `).all()
 }

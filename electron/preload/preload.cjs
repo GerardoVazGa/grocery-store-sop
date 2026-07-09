@@ -27,6 +27,6 @@ contextBridge.exposeInMainWorld("api", {
         getDailySummary: () => ipcRenderer.invoke("reports:getDailySummary"),
         getTopProductsByCategory: () => ipcRenderer.invoke("reports:getTopProductsByCategory"),
         getSalesByCategory: () => ipcRenderer.invoke("reports:getSalesByCategory"),
-        getSalesByBrand: () => ipcRenderer.invoke("reports:getSalesByBrand")
+        getSalesByCategoryAndBrand: () => ipcRenderer.invoke("reports:getSalesByCategoryAndBrand")
     }
 })
