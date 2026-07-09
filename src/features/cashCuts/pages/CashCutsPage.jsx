@@ -1,5 +1,10 @@
+import { CashCutSummary } from "../components/CashCutSummary";
+
 export function CashCutsPage() {
     return (
-        <h1>Corte de caja</h1>
+        <div>
+            <h1>Cortes de caja</h1>
+            <CashCutSummary />
+        </div>
     )
 }
