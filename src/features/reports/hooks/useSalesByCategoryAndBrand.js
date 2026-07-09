@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { reportsApi } from "../api/reports.api";
 
-export function useSalesByBrand() {
-    const [salesByBrand, setSalesByBrand] = useState([]);
+export function useSalesByCategoryAndBrand() {
+    const [salesByCategoryAndBrand, setSalesByCategoryAndBrand] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchSalesByBrand = async() => {
+        const fetchSalesByCategoryAndBrand = async() => {
             try {
                 setIsLoading(true)
-                const data = await reportsApi.getSalesByBrand()
-                setSalesByBrand(data)
+                const data = await reportsApi.getSalesByCategoryAndBrand()
+                setSalesByCategoryAndBrand(data)
                 setError(null)
             } catch (error) {
                 setError(error)
@@ -20,8 +20,8 @@ export function useSalesByBrand() {
             }
         }
 
-        fetchSalesByBrand()
+        fetchSalesByCategoryAndBrand()
     }, [])
 
-    return { salesByBrand, isLoading, error }
+    return { salesByCategoryAndBrand, isLoading, error }
 }
