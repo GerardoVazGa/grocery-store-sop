@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { reportsApi } from "../api/reports.api";
+import { groupSalesByCategory } from "../utils/mappers/groupSalesByCategory";
 
 export function useSalesByCategoryAndBrand() {
     const [salesByCategoryAndBrand, setSalesByCategoryAndBrand] = useState([]);
@@ -11,7 +12,7 @@ export function useSalesByCategoryAndBrand() {
             try {
                 setIsLoading(true)
                 const data = await reportsApi.getSalesByCategoryAndBrand()
-                setSalesByCategoryAndBrand(data)
+                setSalesByCategoryAndBrand(groupSalesByCategory(data))
                 setError(null)
             } catch (error) {
                 setError(error)
