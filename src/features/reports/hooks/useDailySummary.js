@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { reportsApi } from "../api/reports.api";
 
 export function useDailySummary() {
-    const [dailySummary, setDailySummary] = useState([]);
+    const [dailySummary, setDailySummary] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
