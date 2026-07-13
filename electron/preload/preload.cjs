@@ -6,7 +6,8 @@ contextBridge.exposeInMainWorld("api", {
         findByBarCode: (barCode) => ipcRenderer.invoke("products:findByBarCode", barCode),
         findById: (id) => ipcRenderer.invoke("products:findById", id),
         create: (product) => ipcRenderer.invoke("products:create", product),
-        update: (id, product) => ipcRenderer.invoke("products:update", id, product)
+        update: (id, product) => ipcRenderer.invoke("products:update", id, product),
+        search: (query) => ipcRenderer.invoke("products:search", query)
     },
     categories: {
         getAll: () => ipcRenderer.invoke("categories:getAll")
@@ -18,7 +19,7 @@ contextBridge.exposeInMainWorld("api", {
     sales: {
         create: (saleData) => ipcRenderer.invoke("sales:create", saleData),
         getAll: () => ipcRenderer.invoke("sales:getAll"),
-        getById: (saleId) => ipcRenderer.invoke("sales:getById", saleId)
+        getById: (saleId) => ipcRenderer.invoke("sales:getById", saleId),
     },
     cashCuts: {
         getSummary: () => ipcRenderer.invoke("cashCuts:getSummary")
