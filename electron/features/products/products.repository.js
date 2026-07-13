@@ -104,3 +104,31 @@ export function updateProduct(db, id, product) {
 
     return findProductById(db, id)
 }
+
+export function searchProducts(db, query) {
+    return db.prepare(
+        `
+            SELECT 
+                products.id,
+                products.barcode,
+                products.name,
+                products.category_id as categoryId,
+                categories.name as categoryName,
+                products.brand_id as brandId,
+                brands.name as brandName,
+                products.price,
+                products.cost,
+                products.stock,
+                products.created_at as createdAt
+            FROM products
+            LEFT JOIN categories ON categories.id = products.category_id
+            LEFT JOIN brands ON brands.id = products.brand_id
+            WHERE (products.name LIKE ?
+            OR categories.name LIKE ?
+            OR brands.name LIKE ?)
+            AND products.stock > 0
+            ORDER BY products.name
+            LIMIT 10
+        `
+    ).all(`%${query}%`, `%${query}%`, `%${query}%`)
+}

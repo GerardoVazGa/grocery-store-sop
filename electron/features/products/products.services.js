@@ -1,6 +1,6 @@
 import { findBrandById } from "../brands/brands.repository.js"
 import { findCategoryById } from "../categories/categories.repository.js"
-import { createProduct, findProductByBarCode, updateProduct } from "./products.repository.js"
+import { createProduct, findProductByBarCode, searchProducts, updateProduct } from "./products.repository.js"
 
 function validateProduct(db, product, productIdBeingUpdated = null) {
     const { barcode, name, categoryId, brandId, price, cost, stock } = product
@@ -62,4 +62,8 @@ export function createProductService(db, product) {
 export function updateProductService(db, id, product) {
     validateProduct(db, product, id)
     return updateProduct(db, id, product)
+}
+
+export function searchProductsService(db, query) {
+    return searchProducts(db, query)
 }
