@@ -123,10 +123,9 @@ export function searchProducts(db, query) {
             FROM products
             LEFT JOIN categories ON categories.id = products.category_id
             LEFT JOIN brands ON brands.id = products.brand_id
-            WHERE (products.name LIKE ?
+            WHERE products.name LIKE ?
             OR categories.name LIKE ?
-            OR brands.name LIKE ?)
-            AND products.stock > 0
+            OR brands.name LIKE ?
             ORDER BY products.name
             LIMIT 10
         `
