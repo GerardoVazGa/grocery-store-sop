@@ -65,5 +65,12 @@ export function updateProductService(db, id, product) {
 }
 
 export function searchProductsService(db, query) {
-    return searchProducts(db, query)
+    const products = searchProducts(db, query)
+
+    return products.map(product => {
+        return {
+            ...product,
+            outOfStock: product.stock === 0
+        }
+    })
 }
