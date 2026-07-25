@@ -1,3 +1,5 @@
+import { productsApi } from "../../products/api/products.api"
+import { BarcodeScanner } from "./BarcodeScanner"
 import { ProductCard } from "./ProductCard"
 
 export function ProductSearch({ query, onChangeQuery, isLoading, results, onAddProduct }) {
@@ -7,14 +9,25 @@ export function ProductSearch({ query, onChangeQuery, isLoading, results, onAddP
         }
     }
 
+    const handleBarcodeDetected = async (barcode) => {
+        const product = await productsApi.findByBarCode(barcode)
+        if (product) {
+            onAddProduct(product)
+        }
+    }
+
     return (
         <div>
-            <input
-                value={query}
-                placeholder="Buscar producto..."
-                onKeyDown={handleKeyDown}
-                onChange={(e) => onChangeQuery(e.target.value)}
-            />
+
+            <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+                <input
+                    value={query}
+                    placeholder="Buscar producto..."
+                    onKeyDown={handleKeyDown}
+                    onChange={(e) => onChangeQuery(e.target.value)}
+                />
+                <BarcodeScanner onDetected={handleBarcodeDetected} />
+            </div>
             {isLoading && <p>Loading...</p>}
             {results.length === 0 && query.length >= 2 && !isLoading && (
                 <p>No se encontraron productos</p>
