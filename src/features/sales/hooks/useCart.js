@@ -15,8 +15,8 @@ function cartReducer(state, action) {
                     items: state.items.map(item => {
                         return item.id === action.product.id ? {
                             ...item,
-                            quantity: item.quantity + 1,
-                            subtotal: (item.quantity + 1) * item.price
+                            quantity: Math.min(item.quantity + 1, item.stock),
+                            subtotal: Math.min(item.quantity + 1, item.stock) * item.price
                         } : item
                     })
                 }
@@ -48,8 +48,8 @@ function cartReducer(state, action) {
                 items: state.items.map(item => {
                     return item.id === action.productId ? {
                         ...item,
-                        quantity: Math.min(item.quantity + 1, item.stock),
-                        subtotal: action.quantity * item.price
+                        quantity: Math.min(action.quantity, item.stock),
+                        subtotal: Math.min(action.quantity, item.stock) * item.price
                     } : item
                 })
             }
