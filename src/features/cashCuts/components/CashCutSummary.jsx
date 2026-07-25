@@ -1,11 +1,4 @@
-import { useCashCutsSummary } from "../hooks/useCashCutsSummary"
-
-export function CashCutSummary() {
-    const { cashCutsSummary, isLoading, error } = useCashCutsSummary()
-
-    if (isLoading) return <p>Cargando corte...</p>
-    if (error) return <p>Error al cargar el corte</p>
-    if (!cashCutsSummary) return null
+export function CashCutSummary({ cashCutsSummary }) {
 
     return (
         <section>
