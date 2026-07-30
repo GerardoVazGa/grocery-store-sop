@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useCategories } from "../../categories/hooks/useCategories.js"
 import {useBrands} from "../../brands/hooks/useBrands.js"
 import { productSchema } from "../schema/productSchema.js"
+import { BarcodeScanner } from "../../sales/components/BarcodeScanner.jsx"
 
 export function ProductForm({ onCreate }) {
     const { categories } = useCategories()
@@ -10,6 +11,7 @@ export function ProductForm({ onCreate }) {
     const {
         register,
         handleSubmit,
+        setValue,
         control,
         reset,
         formState: { errors, isSubmitting },
@@ -30,9 +32,14 @@ export function ProductForm({ onCreate }) {
 
     const { brands } = useBrands(selectedCategoryId ? Number(selectedCategoryId) : null)
 
+    const handleBarcodeDetected = (barcode) => {
+        setValue("barcode", barcode)
+    }
+
     async function onSubmit(data) {
         await onCreate({
             ...data,
+            barcode: data.barcode || null,
             brandId: data.brandId ? Number(data.brandId) : null,
         })
         reset()
@@ -42,7 +49,10 @@ export function ProductForm({ onCreate }) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
                 <label>Código de barras</label>
-                <input {...register("barcode")} />
+                <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center" }}>
+                    <input {...register("barcode")} placeholder="Opcional" />
+                    <BarcodeScanner onDetected={handleBarcodeDetected} />
+                </div>
                 {errors.barcode && <span>{errors.barcode.message}</span>}
             </div>
 
