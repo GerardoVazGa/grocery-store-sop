@@ -10,11 +10,19 @@ contextBridge.exposeInMainWorld("api", {
         search: (query) => ipcRenderer.invoke("products:search", query)
     },
     categories: {
-        getAll: () => ipcRenderer.invoke("categories:getAll")
+        getAll: () => ipcRenderer.invoke("categories:getAll"),
+        findById: (id) => ipcRenderer.invoke("categories:findById", id),
+        findByName: (name) => ipcRenderer.invoke("categories:findByName", name),
+        update: (id, data) => ipcRenderer.invoke("categories:update", id, data),
+        create: (data) => ipcRenderer.invoke("categories:create", data)
     },
     brands: {
         getAll: () => ipcRenderer.invoke("brands:getAll"),
-        getByCategory: (categoryId) => ipcRenderer.invoke("brands:getByCategory", categoryId)
+        getByCategory: (categoryId) => ipcRenderer.invoke("brands:getByCategory", categoryId),
+        findById: (id) => ipcRenderer.invoke("brands:findById", id),
+        findWithCategoryId: (name, categoryId) => ipcRenderer.invoke("brands:findWithCategoryId", name, categoryId),
+        create: (data) => ipcRenderer.invoke("brands:create", data),
+        update: (id, data) => ipcRenderer.invoke("brands:update", id, data)
     },
     sales: {
         create: (saleData) => ipcRenderer.invoke("sales:create", saleData),
