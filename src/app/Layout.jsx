@@ -8,11 +8,14 @@ export function Layout() {
             <nav>
                 <NavLink to="/">Dashboard</NavLink>
                 <NavLink to="/products">Productos</NavLink>
-                <NavLink to="/sales" style={{ pointerEvents: isClosed ? "none" : "auto", opacity: isClosed ? 0.5 : 1 }}>
+                <NavLink
+                    to="/sales"
+                    style={{ pointerEvents: isClosed ? "none" : "auto", opacity: isClosed ? 0.5 : 1 }}
+                >
                     Ventas {isClosed && "(Corte cerrado)"}
                 </NavLink>
                 <NavLink to="/cash-cuts">Corte de caja</NavLink>
-                {isClosed && <span>✅ Corte cerrado</span>}
+                <NavLink to="/settings">⚙️ Configuración</NavLink>
             </nav>
             <main>
                 <Outlet />
