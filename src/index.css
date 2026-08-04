@@ -12,6 +12,14 @@
   --color-text: #1A1A1A;
   --color-text-muted: #6B7280;
   --color-border: #D1D5DB;
+
+  --color-metric-blue-bg: #EFF6FF;
+  --color-metric-blue-text: #1D4ED8;
+  --color-metric-green-bg: #F0FDF4;
+  --color-metric-green-text: #15803D;
+
+  --color-table-header-bg: #F3F4F6;
+  --color-table-header-text: #4B5563;
 }
 
 /* *,
