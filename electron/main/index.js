@@ -13,12 +13,15 @@ function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        autoHideMenuBar: false,
         webPreferences: {
             preload: paths.preload,
             contextIsolation: true,
             nodeIntegration: false
         },
     })
+
+    mainWindow.maximize()
 
     const isDev = !app.isPackaged
 
