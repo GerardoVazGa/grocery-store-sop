@@ -29,10 +29,16 @@ export function SalesPage() {
         addProductToCart(product)
     }
     return (
-        <div>
-            <h1>Punto de Venta</h1>
-            <div style={{ display: "flex", gap: "1rem", height: "calc(100vh - 80px)" }}>
-                <div style={{ flex: 1, overflowY: "auto" }}>
+        <div className="flex h-full">
+            {/* Panel izquierdo - búsqueda y productos */}
+            <div className="flex-1 flex flex-col p-6 overflow-hidden">
+                <div className="mb-4">
+                    <h1 className="text-2xl font-bold text-text">Ventas</h1>
+                    <p className="text-text-muted text-sm mt-1">
+                        Escanea o busca productos para agregar al carrito
+                    </p>
+                </div>
+                <div className="flex-1 overflow-y-auto">
                     <ProductSearch 
                         query={query}
                         onChangeQuery={setQuery}
@@ -41,21 +47,31 @@ export function SalesPage() {
                         onAddProduct={handleSelectProduct}
                     />
                 </div>
-                <div style={{ width: "380px", borderLeft: "1px solid #ccc", paddingLeft: "1rem", overflowY: "auto" }}>
-                    <Cart
-                        items={products}
-                        total={totalCart}
-                        paymentMethod={paymentMethod}
-                        onIncrease={increaseQuantity}
-                        onDecrease={decreaseQuantity}
-                        onUpdateQuantity={updateProductQuantity}
-                        onRemove={removeProductFromCart}
-                        onPaymentMethodChange={setPaymentMethod}
-                        onSubmit={submitSale}
-                        isSubmitting={isLoadingSubmit}
-                        error={error}
-                    />
+            </div>
+
+            {/* Panel derecho - carrito */}
+            <div className="w-96 border-l border-border bg-surface flex flex-col">
+                <div className="p-4 border-b border-border flex items-center justify-between">
+                    <h2 className="font-semibold text-text">Carrito</h2>
+                    {products.length > 0 && (
+                        <span className="bg-accent text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                            {products.length} productos
+                        </span>
+                    )}
                 </div>
+                <Cart
+                    items={products}
+                    total={totalCart}
+                    paymentMethod={paymentMethod}
+                    onIncrease={increaseQuantity}
+                    onDecrease={decreaseQuantity}
+                    onUpdateQuantity={updateProductQuantity}
+                    onRemove={removeProductFromCart}
+                    onPaymentMethodChange={setPaymentMethod}
+                    onSubmit={submitSale}
+                    isSubmitting={isLoadingSubmit}
+                    error={error}
+                />
             </div>
         </div>
     )
