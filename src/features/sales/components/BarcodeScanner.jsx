@@ -32,6 +32,7 @@ export function BarcodeScanner({ onDetected, compact = false }) {
 
                 {!isActive ? (
                     <button
+                        type="button"
                         onClick={startScanner}
                         disabled={!selectedDeviceId}
                         className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-sidebar-text transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-50"
@@ -40,6 +41,7 @@ export function BarcodeScanner({ onDetected, compact = false }) {
                     </button>
                 ) : (
                     <button
+                        type="button"
                         onClick={stopScanner}
                         className="rounded-lg bg-danger px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
                     >
