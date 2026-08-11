@@ -5,7 +5,7 @@ import { useProducts } from "../hooks/useProducts"
 
 
 export function ProductsPage() {
-    const { products, isLoading, createProduct } = useProducts()
+    const { products, isLoading, createProduct, updateProduct, deleteProduct } = useProducts()
     const [showForm, setShowForm] = useState(false)
 
     const handleCreate = async (product) => {
@@ -40,7 +40,11 @@ export function ProductsPage() {
             {isLoading ? (
                 <div className="bg-surface rounded-xl p-6 animate-pulse h-48" />
             ) : (
-                <ProductsList products={products} />
+                <ProductsList 
+                    products={products} 
+                    onEdit={updateProduct}
+                    onDelete={deleteProduct}
+                />
             )}
         </div>
     )
