@@ -7,6 +7,7 @@ import {
 } from './products.repository.js'
 import { 
     createProductService, 
+    deleteProductService, 
     searchProductsService, 
     updateProductService 
 } from './products.services.js'
@@ -26,6 +27,10 @@ export function registerProductsHandlers() {
 
     ipcMain.handle("products:create", (event, product) => {
         return createProductService(db, product)
+    })
+
+    ipcMain.handle("products:delete", (event, id) => {
+        return deleteProductService(db, id)
     })
 
     ipcMain.handle("products:update", (event, id, product) => {
