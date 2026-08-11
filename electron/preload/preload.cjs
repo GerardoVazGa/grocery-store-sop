@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld("api", {
         findById: (id) => ipcRenderer.invoke("products:findById", id),
         create: (product) => ipcRenderer.invoke("products:create", product),
         update: (id, product) => ipcRenderer.invoke("products:update", id, product),
+        delete: (id) => ipcRenderer.invoke("products:delete", id),
         search: (query) => ipcRenderer.invoke("products:search", query)
     },
     categories: {
