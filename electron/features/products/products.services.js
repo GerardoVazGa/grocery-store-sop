@@ -1,6 +1,6 @@
 import { findBrandById } from "../brands/brands.repository.js"
 import { findCategoryById } from "../categories/categories.repository.js"
-import { createProduct, findProductByBarCode, searchProducts, updateProduct } from "./products.repository.js"
+import { createProduct, deleteProduct, findProductByBarCode, findProductById, searchProducts, updateProduct } from "./products.repository.js"
 
 function validateProduct(db, product, productIdBeingUpdated = null) {
     const { barcode, name, categoryId, brandId, price, cost, stock } = product
@@ -73,4 +73,25 @@ export function searchProductsService(db, query) {
             outOfStock: product.stock === 0
         }
     })
+}
+
+export function deleteProductService(db, id) {
+    const product = findProductById(db, id)
+
+    if(!product) {
+        throw new Error("El producto no existe")
+    }
+
+    const hasSales = db.prepare(
+        `
+            SELECT COUNT (*) as count FROM sales_products
+            WHERE product_id = ?
+        `
+    ).get(id)
+
+    if(hasSales.count > 0) {
+        throw new Error("El producto tiene ventas asociadas y no puede ser eliminado")
+    } 
+
+    return deleteProduct(db, id)
 }
