@@ -131,3 +131,20 @@ export function searchProducts(db, query) {
         `
     ).all(`%${query}%`, `%${query}%`, `%${query}%`)
 }
+
+export function deleteProduct(db, id) {
+    const result = db.prepare(
+        `
+            DELETE FROM products
+            WHERE id = ?
+        `
+    ).run(id)
+
+    if(result.changes === 0) {
+        throw new Error(`Product with id: ${id} not found`)
+    }
+
+    return {
+        id
+    }
+}
