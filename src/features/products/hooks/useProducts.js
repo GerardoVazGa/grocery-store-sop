@@ -39,6 +39,11 @@ export function useProducts() {
         refresh()
     }, [refresh])
 
+    const deleteProduct = useCallback(async (id) => {
+        await productsApi.delete(id)
+        refresh()
+    }, [refresh])
+
     const updateProduct = useCallback(async (id, product) => {
         await productsApi.update(id, product)
         refresh()
@@ -50,6 +55,7 @@ export function useProducts() {
         error,
         refresh,
         createProduct,
+        deleteProduct,
         updateProduct,
     }
 }
