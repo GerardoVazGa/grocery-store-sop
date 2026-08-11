@@ -1,16 +1,24 @@
+import { useState } from "react";
 import { CashCutSummary } from "../components/CashCutSummary";
 import { CloseCashCutButton } from "../components/CloseCashCutButton";
 import { DailySalesList } from "../components/DailySalesList";
 import { useCashCutsSummary } from "../hooks/useCashCutsSummary";
 import { useDailySales } from "../hooks/useDailySales";
 import { useCashCutStore } from "../store/cashCutStore";
+import { CloseCashCutModal } from "../components/CloseCashCutModal";
 
 export function CashCutsPage() {
     const { cashCutsSummary, isLoading: isLoadingCashCutsSummary, error: cashCutsSummaryError } = useCashCutsSummary()
     const { dailySales, isLoading: salesLoading } = useDailySales()
-    const { closeCashCut, isClosing, error, isClosed } = useCashCutStore()
+    const { closeCashCut, isClosing, error, isClosed, reset } = useCashCutStore()
+    const [showModal, setShowModal] = useState(false)
 
     const isLoading = isLoadingCashCutsSummary || salesLoading
+
+    const handleCloseCashCut = async () => {
+        await closeCashCut()
+        setShowModal(false)
+    }
 
     if (isLoading) return (
         <div className="p-6 space-y-4">
@@ -21,10 +29,19 @@ export function CashCutsPage() {
 
     if (isClosed) return (
         <div className="p-6 flex items-center justify-center h-full">
-            <div className="bg-surface rounded-xl p-12 text-center shadow-sm max-w-sm">
+            <div className="bg-surface rounded-xl p-12 text-center shadow-sm max-w-sm w-full">
                 <p className="text-5xl mb-4">✅</p>
                 <h2 className="text-xl font-bold text-text mb-2">Corte cerrado</h2>
-                <p className="text-text-muted text-sm">El corte del día se registró correctamente.</p>
+                <p className="text-text-muted text-sm mb-6">
+                    El corte del día se registró correctamente.
+                </p>
+                
+                <button
+                    onClick={reset}
+                    className="text-sm text-text-muted hover:text-danger underline transition-colors mt-4 block mx-auto"
+                >
+                    ¿Fue un error? Reabrir corte
+                </button>
             </div>
         </div>
     )
@@ -36,11 +53,22 @@ export function CashCutsPage() {
                     <h1 className="text-2xl font-bold text-text">Corte de caja</h1>
                     <p className="text-text-muted text-sm mt-1">Resumen y cierre del día</p>
                 </div>
-                <CloseCashCutButton onClick={closeCashCut} isLoading={isClosing} error={error} />
+                <CloseCashCutButton onClose={() => setShowModal(true)} isLoading={isClosing} error={error} />
             </div>
 
             <CashCutSummary summary={cashCutsSummary} isLoading={isLoadingCashCutsSummary} error={cashCutsSummaryError} />
             <DailySalesList sales={dailySales} />
+
+            {
+                showModal && (
+                    <CloseCashCutModal 
+                        summary={cashCutsSummary} 
+                        onConfirm={handleCloseCashCut} 
+                        onCancel={() => setShowModal(false)} 
+                        isClosing={isClosing} 
+                    />
+                )
+            }
         </div>
     )
 }
