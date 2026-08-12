@@ -8,6 +8,7 @@ import { registerCategoriesHandlers } from "../features/categories/categories.ha
 import { registerSalesHandlers } from "../features/sales/sales.handlers.js"
 import { registerCashCutsHandlers } from "../features/cashCuts/cashCuts.handlers.js"
 import { registerReportsHandlers } from "../features/reports/reports.handlers.js"
+import { registerPrinterHandlers } from "../features/printer/printer.handlers.js"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -31,6 +32,8 @@ function createWindow() {
     } else {
         mainWindow.loadFile(paths.distIndex)
     }
+
+    return mainWindow
 }
 
 app.whenReady().then(() => {
@@ -40,7 +43,8 @@ app.whenReady().then(() => {
     registerSalesHandlers()
     registerCashCutsHandlers()
     registerReportsHandlers()
-    createWindow()
+    const mainWindow = createWindow()
+    registerPrinterHandlers(mainWindow)
 })
 
 app.on("window-all-closed", () => {
