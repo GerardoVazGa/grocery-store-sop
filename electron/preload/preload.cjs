@@ -40,5 +40,9 @@ contextBridge.exposeInMainWorld("api", {
         getTopProductsByCategory: () => ipcRenderer.invoke("reports:getTopProductsByCategory"),
         getSalesByCategory: () => ipcRenderer.invoke("reports:getSalesByCategory"),
         getSalesByCategoryAndBrand: () => ipcRenderer.invoke("reports:getSalesByCategoryAndBrand")
+    },
+    printer: {
+        print: (data) => ipcRenderer.invoke("printer:print", data),
+        getAvailable: () => ipcRenderer.invoke("printer:getAvailable")
     }
 })
