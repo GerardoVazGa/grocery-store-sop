@@ -36,10 +36,10 @@ contextBridge.exposeInMainWorld("api", {
         close: () => ipcRenderer.invoke("cashCuts:close")
     },
     reports: {
-        getDailySummary: () => ipcRenderer.invoke("reports:getDailySummary"),
-        getTopProductsByCategory: () => ipcRenderer.invoke("reports:getTopProductsByCategory"),
-        getSalesByCategory: () => ipcRenderer.invoke("reports:getSalesByCategory"),
-        getSalesByCategoryAndBrand: () => ipcRenderer.invoke("reports:getSalesByCategoryAndBrand")
+        getDailySummary: (period) => ipcRenderer.invoke("reports:getDailySummary", period),
+        getTopProductsByCategory: (period) => ipcRenderer.invoke("reports:getTopProductsByCategory", period),
+        getSalesByCategory: (period) => ipcRenderer.invoke("reports:getSalesByCategory", period),
+        getSalesByCategoryAndBrand: (period) => ipcRenderer.invoke("reports:getSalesByCategoryAndBrand", period)
     },
     printer: {
         print: (data) => ipcRenderer.invoke("printer:print", data),
