@@ -1,4 +1,7 @@
-export function getDailySummary(db) {
+import { getPeriodFilter } from "../../shared/utils/periodFilter.js"
+
+export function getDailySummary(db, period = "day") {
+    const filter = getPeriodFilter(period)
     return db.prepare(
         `
             SELECT
@@ -9,11 +12,13 @@ export function getDailySummary(db) {
                 ROUND(SUM(CASE WHEN sales.payment_method = 'card' THEN sales.total ELSE 0 END), 2) AS totalCard,
                 ROUND(SUM(CASE WHEN sales.payment_method = 'transfer' THEN sales.total ELSE 0 END), 2) AS totalTransfer
             FROM sales
+            WHERE ${filter}
         `
     ).get()
 }
 
-export function getTopProductsByCategory(db) {
+export function getTopProductsByCategory(db, period = "day") {
+    const filter = getPeriodFilter(period)
     return db.prepare(`
         SELECT
             categories.name as categoryName,
@@ -24,12 +29,14 @@ export function getTopProductsByCategory(db) {
         LEFT JOIN products ON products.id = sale_items.product_id
         LEFT JOIN categories ON categories.id = products.category_id
         LEFT JOIN sales ON sales.id = sale_items.sale_id
+        WHERE ${filter}
         GROUP BY products.id
         ORDER BY categories.name, totalQuantity DESC
     `).all()
 }
 
-export function getSalesByCategory(db) {
+export function getSalesByCategory(db, period = "day") {
+    const filter = getPeriodFilter(period)
     return db.prepare(
         `
             SELECT
@@ -42,6 +49,7 @@ export function getSalesByCategory(db) {
             LEFT JOIN products ON products.id = sale_items.product_id
             LEFT JOIN categories ON categories.id = products.category_id
             LEFT JOIN sales ON sales.id = sale_items.sale_id
+            WHERE ${filter}
             GROUP BY categories.id
             ORDER BY totalRevenue DESC
 
@@ -49,7 +57,8 @@ export function getSalesByCategory(db) {
     ).all()
 }
 
-export function getSalesByCategoryAndBrand(db) {
+export function getSalesByCategoryAndBrand(db, period = "day") {
+    const filter = getPeriodFilter(period)
     return db.prepare(`
         SELECT
             categories.id as categoryId,
@@ -64,6 +73,7 @@ export function getSalesByCategoryAndBrand(db) {
         LEFT JOIN brands ON brands.id = products.brand_id
         JOIN categories ON categories.id = products.category_id
         JOIN sales ON sales.id = sale_items.sale_id
+        WHERE ${filter}
         GROUP BY brands.id, categories.id
         ORDER BY categories.name, totalRevenue DESC
     `).all()
