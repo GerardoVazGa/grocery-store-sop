@@ -1,4 +1,7 @@
+import { todayLocal } from "../../shared/utils/dateUtils.js"
+
 export function getCashCutSummary(db) {
+    const today = todayLocal()
     return db.prepare(
         `
             SELECT
@@ -10,11 +13,13 @@ export function getCashCutSummary(db) {
                 MIN(sales.created_at) AS firstSaleTime,
                 MAX(sales.created_at) AS lastSaleTime
             FROM sales
+            WHERE date(sales.created_at) = '${today}'
         `
     ).get()
 }
 
 export function getDailySales(db) {
+    const today = todayLocal()
     return db.prepare(`
         SELECT
             sales.id,
@@ -24,6 +29,7 @@ export function getDailySales(db) {
             COUNT(sale_items.id) as itemCount
         FROM sales
         LEFT JOIN sale_items ON sale_items.sale_id = sales.id
+        WHERE date(sales.created_at) = '${today}'
         GROUP BY sales.id
         ORDER BY sales.created_at DESC
     `).all()
