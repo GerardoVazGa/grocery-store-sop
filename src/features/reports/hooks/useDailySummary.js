@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { reportsApi } from "../api/reports.api";
 
-export function useDailySummary() {
+export function useDailySummary(period = "day") {
     const [dailySummary, setDailySummary] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ export function useDailySummary() {
         const fetchDailySummary = async() => {
             try {
                 setIsLoading(true)
-                const data = await reportsApi.getDailySummary()
+                const data = await reportsApi.getDailySummary(period)
                 setDailySummary(data)
                 setError(null)
             } catch (error) {
@@ -21,7 +21,7 @@ export function useDailySummary() {
         }
 
         fetchDailySummary()
-    }, [])
+    }, [period])
 
     return { dailySummary, isLoading, error }
 }

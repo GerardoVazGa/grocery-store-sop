@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { reportsApi } from "../api/reports.api";
 import { groupSalesByCategory } from "../utils/mappers/groupSalesByCategory";
 
-export function useSalesByCategoryAndBrand() {
+export function useSalesByCategoryAndBrand(period = "day") {
     const [salesByCategoryAndBrand, setSalesByCategoryAndBrand] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ export function useSalesByCategoryAndBrand() {
         const fetchSalesByCategoryAndBrand = async() => {
             try {
                 setIsLoading(true)
-                const data = await reportsApi.getSalesByCategoryAndBrand()
+                const data = await reportsApi.getSalesByCategoryAndBrand(period)
                 setSalesByCategoryAndBrand(groupSalesByCategory(data))
                 setError(null)
             } catch (error) {
@@ -22,7 +22,7 @@ export function useSalesByCategoryAndBrand() {
         }
 
         fetchSalesByCategoryAndBrand()
-    }, [])
+    }, [period])
 
     return { salesByCategoryAndBrand, isLoading, error }
 }

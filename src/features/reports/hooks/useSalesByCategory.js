@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { reportsApi } from "../api/reports.api";
 
-export function useSalesByCategory() {
+export function useSalesByCategory(period = "day") {
     const [salesByCategory, setSalesByCategory] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ export function useSalesByCategory() {
         const fetchSalesByCategory = async() => {
             try {
                 setIsLoading(true)
-                const data = await reportsApi.getSalesByCategory()
+                const data = await reportsApi.getSalesByCategory(period)
                 setSalesByCategory(data)
                 setError(null)
             } catch (error) {
@@ -21,7 +21,7 @@ export function useSalesByCategory() {
         }
 
         fetchSalesByCategory()
-    }, [])
+    }, [period])
 
     return { salesByCategory, isLoading, error }
 }
