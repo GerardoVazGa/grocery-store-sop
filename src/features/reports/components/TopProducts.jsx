@@ -1,14 +1,22 @@
 import { useTopProducts } from "../hooks/useTopProducts"
+import { useReportsPeriodStore } from "../store/reportsStore"
+
+const periodLabel = {
+    day: "hoy",
+    week: "esta semana",
+    month: "este mes",
+}
 
 export function TopProducts() {
-    const { topProducts, isLoading, error } = useTopProducts()
+    const { period } = useReportsPeriodStore()
+    const { topProducts, isLoading, error } = useTopProducts(period)
 
     if (isLoading) return <div className="bg-surface rounded-xl p-6 animate-pulse h-48" />
     if (error) return <div className="bg-surface rounded-xl p-6 text-danger">Error al cargar</div>
 
     return (
         <div className="bg-surface rounded-xl p-6 shadow-sm">
-            <h2 className="text-base font-semibold text-text mb-4">Top productos</h2>
+            <h2 className="text-base font-semibold text-text mb-4">Top productos - {periodLabel[period]}</h2>
             {topProducts.length === 0 ? (
                 <p className="text-text-muted text-sm">Sin ventas registradas</p>
             ) : (

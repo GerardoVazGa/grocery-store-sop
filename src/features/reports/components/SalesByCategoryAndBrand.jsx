@@ -1,7 +1,15 @@
 import { useSalesByCategoryAndBrand } from "../hooks/useSalesByCategoryAndBrand";
+import { useReportsPeriodStore } from "../store/reportsStore";
+
+const periodLabel = {
+    day: "hoy",
+    week: "esta semana",
+    month: "este mes",
+}
 
 export function SalesByCategoryAndBrand() {
-    const { salesByCategoryAndBrand, isLoading, error } = useSalesByCategoryAndBrand();
+    const { period } = useReportsPeriodStore()
+    const { salesByCategoryAndBrand, isLoading, error } = useSalesByCategoryAndBrand(period)
 
     if (isLoading) {
         return (
@@ -23,7 +31,7 @@ export function SalesByCategoryAndBrand() {
         <div className="space-y-6">
             <div>
                 <h2 className="text-2xl font-bold text-gray-800">
-                    Ventas por categoría y marca
+                    Ventas por categoría y marca {periodLabel[period]}
                 </h2>
                 <p className="mt-1 text-sm text-gray-500">
                     Resumen de unidades vendidas e ingresos por categoría.
