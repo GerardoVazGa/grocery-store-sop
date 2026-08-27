@@ -1,3 +1,4 @@
+import { getActiveCashCut } from "../cashCuts/cashCuts.repository.js"
 import { findProductById } from "../products/products.repository.js"
 import { decrementProductStock, getAllSales, getSaleById, insertSale, insertSaleItems } from "./sales.repository.js"
 
@@ -10,6 +11,12 @@ export function createSaleService(db, items, paymentMethod = "cash") {
 
     if(!validPaymentMethods.includes(paymentMethod)) {
         throw new Error(`Método de pago inválido. Métodos válidos: ${validPaymentMethods.join(", ")}`)
+    }
+
+    const activeCashCut = getActiveCashCut(db)
+
+    if(!activeCashCut) {
+        throw new Error("No hay un corte de caja abierto. Por favor, abre un corte de caja antes de crear una venta.")
     }
 
     const runTransaction = db.transaction(() => {
@@ -46,7 +53,7 @@ export function createSaleService(db, items, paymentMethod = "cash") {
             })
         }
 
-        const saleId = insertSale(db, total, paymentMethod)
+        const saleId = insertSale(db, total, paymentMethod, activeCashCut.id)
 
         for(const resolvedItem of resolvedItems) {
             insertSaleItems(db, {saleId, ...resolvedItem})
