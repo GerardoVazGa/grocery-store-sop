@@ -1,12 +1,12 @@
 import { nowLocal } from "../../shared/utils/dateUtils.js"
 
-export function insertSale(db, totalAmount, paymentMethod) {
+export function insertSale(db, totalAmount, paymentMethod, cashCutId) {
     const result = db.prepare(
         `
-            INSERT INTO sales (total, payment_method, created_at)
-            VALUES (?, ?, ?)
+            INSERT INTO sales (total, payment_method, cash_cut_id, created_at)
+            VALUES (?, ?, ?, ?)
         `
-    ).run(totalAmount, paymentMethod, nowLocal())
+    ).run(totalAmount, paymentMethod, cashCutId, nowLocal())
 
     return result.lastInsertRowid
 }
