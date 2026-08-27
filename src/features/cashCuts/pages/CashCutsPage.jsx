@@ -10,13 +10,20 @@ import { CloseCashCutModal } from "../components/CloseCashCutModal";
 export function CashCutsPage() {
     const { cashCutsSummary, isLoading: isLoadingCashCutsSummary, error: cashCutsSummaryError } = useCashCutsSummary()
     const { dailySales, isLoading: salesLoading } = useDailySales()
-    const { closeCashCut, isClosing, error, isClosed, reset } = useCashCutStore()
+    const { 
+        closeCashCut, 
+        isClosing, 
+        isReopening,
+        error, 
+        isClosed, 
+        reset 
+    } = useCashCutStore()
     const [showModal, setShowModal] = useState(false)
 
     const isLoading = isLoadingCashCutsSummary || salesLoading
 
-    const handleCloseCashCut = async () => {
-        await closeCashCut()
+    const handleCloseCashCut = async ({countedCash}) => {
+        await closeCashCut(countedCash)
         setShowModal(false)
     }
 
@@ -38,9 +45,10 @@ export function CashCutsPage() {
                 
                 <button
                     onClick={reset}
-                    className="text-sm text-text-muted hover:text-danger underline transition-colors mt-4 block mx-auto"
+                    disabled={isReopening}
+                    className="text-sm text-text-muted hover:text-danger underline transition-colors mt-4 block mx-auto disabled:opacity-50"
                 >
-                    ¿Fue un error? Reabrir corte
+                    {isReopening ? "Reabriendo..." : "¿Fue un error? Reabrir corte"}
                 </button>
             </div>
         </div>
