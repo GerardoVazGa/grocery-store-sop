@@ -1,4 +1,4 @@
-import { todayLocal } from "../../shared/utils/dateUtils.js"
+import { nowLocal, todayLocal } from "../../shared/utils/dateUtils.js"
 
 export function getCashCutSummary(db) {
     const today = todayLocal()
@@ -35,18 +35,81 @@ export function getDailySales(db) {
     `).all()
 }
 
-export function closeCashCut(db) {
+export function closeCashCut(db, cashCutId, countedCash) {
     const summary = db.prepare(`
         SELECT
-            ROUND(SUM(sales.total), 2) as expectedCash,
             ROUND(SUM(CASE WHEN sales.payment_method = 'cash' THEN sales.total ELSE 0 END), 2) as cashSales
         FROM sales
+        WHERE sales.cash_cut_id = ?
+    `).get(cashCutId)
+
+    const expectedCash = summary.cashSales ?? 0
+    const difference = countedCash - expectedCash
+
+    db.prepare(`
+        UPDATE cash_cuts
+        SET
+            closed_at = ?,
+            counted_cash = ?,
+            expected_cash = ?,
+            difference = ?,
+            status = 'CLOSED'
+        WHERE id = ?
+    `).run(nowLocal(), countedCash, expectedCash, difference, cashCutId)
+
+    return { cashCutId, countedCash, expectedCash, difference }
+}
+
+export function getActiveCashCut(db) {
+    return db.prepare(`
+        SELECT * FROM cash_cuts 
+        WHERE closed_at IS NULL
+        ORDER BY opened_at DESC
+        LIMIT 1
     `).get()
+}
 
-    const result = db.prepare(`
-        INSERT INTO cash_cuts (opened_at, closed_at, opening_amount, expected_cash, counted_cash, difference)
-        VALUES (datetime('now'), datetime('now'), 0, ?, ?, 0)
-    `).run(summary.expectedCash, summary.cashSales)
+export function getCashCutById(db, id) {
+    return db.prepare(
+        `
+            SELECT * FROM cash_cuts
+            WHERE id = ? 
+        `
+    ).get(id)
+}
 
-    return { id: result.lastInsertRowid, ...summary }
+export function openCashCut(db, openingAmount) {
+    const existingCashCut = getActiveCashCut(db)
+
+    if (existingCashCut) {
+        throw new Error("Ya hay un corte de caja abierto. Por favor, cierre el corte de caja actual antes de abrir uno nuevo.")
+    }
+
+    const result = db.prepare(
+        `
+            INSERT INTO cash_cuts (opened_at, opening_amount, status)
+            VALUES(?, ?, 'OPEN')
+        `
+    ).run(nowLocal(), openingAmount)
+
+    return getCashCutById(db, result.lastInsertRowid)
+}
+
+export function reopenCashCut(db, cashCutId) {
+    const result = db.prepare(
+        `
+            UPDATE cash_cuts
+            SET 
+                closed_at = NULL, 
+                counted_cash = NULL, 
+                expected_cash = NULL, 
+                difference = NULL,
+                status = 'OPEN'
+            WHERE id = ?
+        `
+    ).run(cashCutId)
+
+    if(result.changes === 0) throw new Error(`No se pudo reabrir el corte de caja con ID ${cashCutId}.`)
+    
+    return getCashCutById(db, cashCutId)
 }
