@@ -1,5 +1,6 @@
 import { CashCutSummary } from "../../cashCuts/components/CashCutSummary";
 import { useCashCutsSummary } from "../../cashCuts/hooks/useCashCutsSummary";
+import { useCashCutStore } from "../../cashCuts/store/cashCutStore";
 import { DailySummary } from "../components/DailySummary";
 import { PeriodSelector } from "../components/PeriodSelector";
 import { SalesByCategoryAndBrand } from "../components/SalesByCategoryAndBrand";
@@ -8,11 +9,12 @@ import { useReportsPeriodStore } from "../store/reportsStore";
 
 export function DashboardPage() {
     const { period } = useReportsPeriodStore()
+    const { activeCashCut } = useCashCutStore()
     const { 
         cashCutsSummary, 
         isLoading: isLoadingCashCutsSummary, 
         error: cashCutsSummaryError 
-    } = useCashCutsSummary()
+    } = useCashCutsSummary({ cashCutId: activeCashCut?.id })
     
     return (
         <div className="p-6 space-y-6">

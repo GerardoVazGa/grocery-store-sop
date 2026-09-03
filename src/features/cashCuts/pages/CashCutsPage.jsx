@@ -8,9 +8,8 @@ import { useCashCutStore } from "../store/cashCutStore";
 import { CloseCashCutModal } from "../components/CloseCashCutModal";
 
 export function CashCutsPage() {
-    const { cashCutsSummary, isLoading: isLoadingCashCutsSummary, error: cashCutsSummaryError } = useCashCutsSummary()
-    const { dailySales, isLoading: salesLoading } = useDailySales()
     const { 
+        activeCashCut,
         closeCashCut, 
         isClosing, 
         isReopening,
@@ -18,11 +17,13 @@ export function CashCutsPage() {
         isClosed, 
         reset 
     } = useCashCutStore()
+    const { cashCutsSummary, isLoading: isLoadingCashCutsSummary, error: cashCutsSummaryError } = useCashCutsSummary({ cashCutId: activeCashCut?.id })
+    const { dailySales, isLoading: salesLoading } = useDailySales({ cashCutId: activeCashCut?.id })
     const [showModal, setShowModal] = useState(false)
 
     const isLoading = isLoadingCashCutsSummary || salesLoading
 
-    const handleCloseCashCut = async ({countedCash}) => {
+    const handleCloseCashCut = async (countedCash) => {
         await closeCashCut(countedCash)
         setShowModal(false)
     }
