@@ -1,0 +1,21 @@
+{
+    "appId": "com.abarrotes.pos",
+    "productName": "Abarrotes POS",
+    "directories": {
+        "output": "release"
+    },
+    "files": [
+        "dist/**/*",
+        "electron/**/*",
+        "node_modules/**/*",
+        "package.json"
+    ],
+    "win": {
+        "target": "nsis",
+        "icon": "assets/icon.ico"
+    },
+    "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true
+    }
+}
