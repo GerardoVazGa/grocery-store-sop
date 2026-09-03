@@ -60,10 +60,11 @@ export function createSaleService(db, items, paymentMethod = "cash") {
             decrementProductStock(db, resolvedItem.productId, resolvedItem.quantity)
         }
 
-        return getSaleById(db, saleId)
+        return saleId
     })
 
-    return runTransaction()
+    const saleId = runTransaction()
+    return getSaleByIdService(db, saleId)
 }
 
 export function getAllSalesService(db) {
@@ -71,5 +72,33 @@ export function getAllSalesService(db) {
 }
 
 export function getSaleByIdService(db, saleId) {
-    return getSaleById(db, saleId)
+    const sales = getSaleById(db, saleId)
+
+    if(!sales) {
+        throw new Error(`No se encontró la venta con id ${saleId}`)
+    }
+
+    const sale = sales.reduce((acc, row) => {
+        if(!acc.id) {
+            acc.id = row.id
+            acc.total = row.total
+            acc.paymentMethod = row.paymentMethod
+            acc.createdAt = row.createdAt
+            acc.items = []
+        }
+
+        if(row.productId) {
+            acc.items.push({
+                productId: row.productId,
+                productName: row.productName,
+                quantity: row.quantity,
+                unitPrice: row.unitPrice,
+                subtotal: row.subtotal
+            })
+        }
+
+        return acc
+    }, {})
+
+    return sale
 }
