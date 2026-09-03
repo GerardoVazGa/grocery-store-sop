@@ -4,13 +4,14 @@ import { salesApi } from "../api/sales.api"
 export function useSalesSubmit({items, paymentMethod, onSuccess}) {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [completedSale, setCompletedSale] = useState(null)
 
     const submitSale = async () => {
         try {
             setIsLoading(true)
             setError(null)
 
-            await salesApi.createSale({
+            const sale = await salesApi.createSale({
                 paymentMethod,
                 items: items.map(item => ({
                     productId: item.id,
@@ -18,17 +19,24 @@ export function useSalesSubmit({items, paymentMethod, onSuccess}) {
                 }))
             })
 
-            onSuccess()
+            setCompletedSale(sale)
             
         } catch (error) {
-            setError(error)
+            setError(error.message)
         } finally {
             setIsLoading(false)
         }
     }
+
+    const clearCompletedSale = () => {
+        setCompletedSale(null)
+        onSuccess()
+    }
     
     return {
         submitSale,
+        completedSale,
+        clearCompletedSale,
         isLoading,
         error
     }
