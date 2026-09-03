@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { closeCashCut, getActiveCashCut, getCashCutById, getCashCutSummary, getDailySales, openCashCut, reopenCashCut } from "./cashCuts.repository.js";
+import { closeCashCut, getActiveCashCut, getCashCutById, getCashCutSales, getCashCutSummary, openCashCut, reopenCashCut } from "./cashCuts.repository.js";
 import db from "../../db/connection.js";
 
 export function registerCashCutsHandlers() {
@@ -7,8 +7,8 @@ export function registerCashCutsHandlers() {
         return getCashCutSummary(db)
     })
 
-    ipcMain.handle("cashCuts:getDailySales", () => {
-        return getDailySales(db)
+    ipcMain.handle("cashCuts:getCashCutSales", (event, cashCutId) => {
+        return getCashCutSales(db, cashCutId)
     })
 
     ipcMain.handle("cashCuts:getActive", () => {

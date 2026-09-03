@@ -32,7 +32,7 @@ contextBridge.exposeInMainWorld("api", {
     },
     cashCuts: {
         getSummary: () => ipcRenderer.invoke("cashCuts:getSummary"),
-        getDailySales: () => ipcRenderer.invoke("cashCuts:getDailySales"),
+        getCashCutSales: (cashCutId) => ipcRenderer.invoke("cashCuts:getCashCutSales", cashCutId),
         getActive: () => ipcRenderer.invoke("cashCuts:getActive"),
         open: (openingAmount) => ipcRenderer.invoke("cashCuts:open", openingAmount),
         reopen: (cashCutId) => ipcRenderer.invoke("cashCuts:reopen", cashCutId),
@@ -43,7 +43,8 @@ contextBridge.exposeInMainWorld("api", {
         getDailySummary: (period) => ipcRenderer.invoke("reports:getDailySummary", period),
         getTopProductsByCategory: (period) => ipcRenderer.invoke("reports:getTopProductsByCategory", period),
         getSalesByCategory: (period) => ipcRenderer.invoke("reports:getSalesByCategory", period),
-        getSalesByCategoryAndBrand: (period) => ipcRenderer.invoke("reports:getSalesByCategoryAndBrand", period)
+        getSalesByCategoryAndBrand: (period) => ipcRenderer.invoke("reports:getSalesByCategoryAndBrand", period),
+        getDailySales: (period) => ipcRenderer.invoke("reports:getDailySales", period)
     },
     printer: {
         print: (data) => ipcRenderer.invoke("printer:print", data),
