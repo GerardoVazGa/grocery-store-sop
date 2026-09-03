@@ -20,9 +20,11 @@ export function useSalesSubmit({items, paymentMethod, onSuccess}) {
             })
 
             setCompletedSale(sale)
-            
+
+            return sale
         } catch (error) {
             setError(error.message)
+            return null
         } finally {
             setIsLoading(false)
         }

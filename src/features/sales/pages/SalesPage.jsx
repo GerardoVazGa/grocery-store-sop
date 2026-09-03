@@ -47,8 +47,9 @@ export function SalesPage() {
     }
 
     const handleConfirmSale = async () => {
-        await submitSale()
-        setSaleStep("success")
+        const sale = await submitSale()
+        
+        if(sale) setSaleStep("success")
     }
 
     const handleCancelSale = () => {
@@ -83,7 +84,7 @@ export function SalesPage() {
             handleNewSale()
         }
     }, [completedSale, printerName, handleNewSale])
-    
+
     return (
         <div className="flex h-full">
             <div className="flex-1 flex flex-col p-6 overflow-hidden">
