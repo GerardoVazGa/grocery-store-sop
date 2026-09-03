@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, ipcMain } from "electron"
 import { paths } from "../configs/paths.js"
 import { DEV_SERVER_URL } from "../configs/env.js"
 import '../db/connection.js'
@@ -37,6 +37,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+    ipcMain.handle("app:getVersion", () => app.getVersion())
     registerProductsHandlers()
     registerCategoriesHandlers()
     registerBrandsHandlers()

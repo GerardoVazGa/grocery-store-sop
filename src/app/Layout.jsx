@@ -1,8 +1,15 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useCashCutStore } from "../features/cashCuts/store/cashCutStore";
+import { useEffect, useState } from "react";
 
 export function Layout() {
     const { isClosed } = useCashCutStore()
+    const [version, setVersion] = useState("")
+
+    useEffect(() => {
+        window.api.version().then(setVersion)
+    }, [])
+
     return (
         <div className = "flex h-screen bg-primary-bg overflow-hidden">
             <aside className="w-56 bg-primary flex flex-col flex-shrink-0">
@@ -44,7 +51,7 @@ export function Layout() {
 
                 <footer className="px-6 py-4 border-t border-primary-light">
                     <p className="text-sidebar-text opacity-40 text-xs">
-                        v0.0.0
+                        v{version}
                     </p>
                 </footer>
             </aside>

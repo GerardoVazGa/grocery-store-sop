@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron")
 
 contextBridge.exposeInMainWorld("api", {
+    version: () => ipcRenderer.invoke("app:getVersion"),
     products: {
         getAll: () => ipcRenderer.invoke("products:getAll"),
         findByBarCode: (barCode) => ipcRenderer.invoke("products:findByBarCode", barCode),
