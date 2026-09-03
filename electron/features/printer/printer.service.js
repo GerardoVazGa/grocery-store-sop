@@ -2,9 +2,9 @@ import { BrowserWindow } from "electron"
 import { generateTicketHTML } from "./templates/ticket.js"
 // import ThermalPrinter from "node-thermal-printer"
 
-export function printTicket({ sale, items, storeName, printerName = null }) {
+export function printTicket({ sale, storeName, printerName = null }) {
     return new Promise((resolve, reject) => {
-        const ticketHTML = generateTicketHTML({ sale, items, storeName })
+        const ticketHTML = generateTicketHTML({ sale, items: sale.items, storeName })
 
         // ventana oculta solo para imprimir
         const printWindow = new BrowserWindow({
