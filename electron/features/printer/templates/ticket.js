@@ -4,7 +4,7 @@ export function generateTicketHTML({ sale, items, storeName = "Abarrotes" }) {
 
     const itemsHTML = items.map((item) => `
         <tr>
-            <td>${item.name}</td>
+            <td>${item.productName}</td>
             <td style="text-align:center">${item.quantity}</td>
             <td style="text-align:right">$${item.unitPrice.toFixed(2)}</td>
             <td style="text-align:right">$${item.subtotal.toFixed(2)}</td>
@@ -58,6 +58,7 @@ export function generateTicketHTML({ sale, items, storeName = "Abarrotes" }) {
             </table>
 
             <div class="divider"></div>
+
             <p class="total">TOTAL: $${total.toFixed(2)}</p>
             <p class="payment">
                 Método: ${sale.paymentMethod === "cash" ? "Efectivo" : sale.paymentMethod === "card" ? "Tarjeta" : "Transferencia"}
