@@ -6,7 +6,7 @@ export function SaleSuccess({ sale, onViewTicket, onNewSale, onPrint, hasPrinter
         if (hasPrinter) {
             onPrint()
         }
-    }, [])
+    }, [hasPrinter, onPrint])
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
