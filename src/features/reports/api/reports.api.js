@@ -2,5 +2,6 @@ export const reportsApi = {
     getDailySummary: async(period) => window.api.reports.getDailySummary(period),
     getTopProductsByCategory: async(period) => window.api.reports.getTopProductsByCategory(period),
     getSalesByCategory: async(period) => window.api.reports.getSalesByCategory(period),
-    getSalesByCategoryAndBrand: async(period) => window.api.reports.getSalesByCategoryAndBrand(period)
+    getSalesByCategoryAndBrand: async(period) => window.api.reports.getSalesByCategoryAndBrand(period),
+    getDailySales: async(period) => window.api.reports.getDailySales(period),
 }
