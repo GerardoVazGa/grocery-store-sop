@@ -31,7 +31,7 @@ contextBridge.exposeInMainWorld("api", {
         getById: (saleId) => ipcRenderer.invoke("sales:getById", saleId),
     },
     cashCuts: {
-        getSummary: () => ipcRenderer.invoke("cashCuts:getSummary"),
+        getSummary: (cashCutId) => ipcRenderer.invoke("cashCuts:getSummary", cashCutId),
         getCashCutSales: (cashCutId) => ipcRenderer.invoke("cashCuts:getCashCutSales", cashCutId),
         getActive: () => ipcRenderer.invoke("cashCuts:getActive"),
         open: (openingAmount) => ipcRenderer.invoke("cashCuts:open", openingAmount),

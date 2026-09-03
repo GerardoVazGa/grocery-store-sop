@@ -3,8 +3,8 @@ import { closeCashCut, getActiveCashCut, getCashCutById, getCashCutSales, getCas
 import db from "../../db/connection.js";
 
 export function registerCashCutsHandlers() {
-    ipcMain.handle("cashCuts:getSummary", () => {
-        return getCashCutSummary(db)
+    ipcMain.handle("cashCuts:getSummary", (event, cashCutId) => {
+        return getCashCutSummary(db, cashCutId)
     })
 
     ipcMain.handle("cashCuts:getCashCutSales", (event, cashCutId) => {
