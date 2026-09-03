@@ -1,7 +1,6 @@
 import { CartItem } from "./CartItem"
-import { PaymentMethod } from "./PaymentMethod"
 
-export function Cart({ items, total, paymentMethod, onIncrease, onDecrease, onRemove, onPaymentMethodChange, onSubmit, isSubmitting, error }) {
+export function Cart({ items, total, onIncrease, onDecrease, onRemove, onSubmit, isSubmitting, error }) {
     if (items.length === 0) {
         return (
             <div className="flex-1 flex items-center justify-center">
@@ -32,8 +31,6 @@ export function Cart({ items, total, paymentMethod, onIncrease, onDecrease, onRe
                     <span className="text-text-muted text-sm">Total</span>
                     <span className="text-2xl font-bold text-text">${total.toFixed(2)}</span>
                 </div>
-
-                <PaymentMethod value={paymentMethod} onChange={onPaymentMethodChange} />
 
                 {error && <p className="text-danger text-sm">{error}</p>}
 
