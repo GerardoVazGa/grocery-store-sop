@@ -70,7 +70,7 @@ export function SalesPage() {
         addProductToCart(product)
     }
 
-    const handlePrint = async () => {
+    const handlePrint = useCallback(async () => {
         try {
             await window.api.printer.print({
                 sale: completedSale,
@@ -80,10 +80,10 @@ export function SalesPage() {
         } catch (err) {
             console.error("Error al imprimir:", err)
         } finally {
-            handleNewSale() // cerrar modal de ticket y volver a nueva venta
+            handleNewSale()
         }
-    }
-
+    }, [completedSale, printerName, handleNewSale])
+    
     return (
         <div className="flex h-full">
             <div className="flex-1 flex flex-col p-6 overflow-hidden">
