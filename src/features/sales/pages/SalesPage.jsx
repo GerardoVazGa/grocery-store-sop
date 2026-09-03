@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useProductSearch } from "../../products/hooks/useProductSearch"
 import { Cart } from "../components/Cart"
 import { ProductSearch } from "../components/ProductSearch"
@@ -56,10 +56,11 @@ export function SalesPage() {
         setSaleStep(null)
     }
 
-    const handleNewSale = () => {
+    const handleNewSale = useCallback(() => {
         clearCompletedSale()
         setSaleStep(null)
-    }
+    }, [clearCompletedSale])
+
 
     const handleViewTicket = () => {
         setSaleStep("ticket")
