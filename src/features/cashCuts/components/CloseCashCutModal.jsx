@@ -3,7 +3,10 @@ import { useState } from "react"
 export function CloseCashCutModal({ summary, onConfirm, onCancel, isClosing }) {
     const [countedCash, setCountedCash] = useState("")
 
-    const expectedCash = Number(summary?.totalCash ?? 0)
+    const openingAmount = Number(summary?.openingAmount ?? 0)
+    const cashSales = Number(summary?.totalCash ?? 0)
+    const expectedCash = openingAmount + cashSales
+
     const counted = Number(countedCash) || 0
     const difference = counted - expectedCash
 
@@ -25,6 +28,12 @@ export function CloseCashCutModal({ summary, onConfirm, onCancel, isClosing }) {
                         <span className="text-sm text-text-muted">Total de ventas</span>
                         <span className="text-sm font-semibold text-text">
                             {summary?.totalSales ?? 0} transacciones
+                        </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-text-muted">Efectivo en caja</span>
+                        <span className="text-sm font-semibold text-text">
+                            ${Number(summary?.openingAmount ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}
                         </span>
                     </div>
                     <div className="flex justify-between items-center">
