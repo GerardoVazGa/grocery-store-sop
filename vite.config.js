@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss(),
     ],
+    base: "./",
     server: {
       port: Number(env.VITE_DEV_SERVER_PORT) || 5173,
     },
