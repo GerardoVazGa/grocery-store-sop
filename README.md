@@ -7,6 +7,7 @@ A desktop point-of-sale application for a neighborhood grocery store, built with
 The current implementation covers the core operational flow of a retail store:
 
 - Product catalog management with barcode, category, brand, price, cost, and stock.
+- Barcode scanning support for product lookup and registration.
 - Search and selection of products for a sale.
 - Cart-based checkout with quantity adjustments and payment method selection.
 - Transaction validation before completion, including stock checks and active cash-cut validation.
@@ -36,6 +37,7 @@ This project is a functional local POS prototype oriented to a single-store envi
 The product module allows:
 
 - Creating products with barcode, name, category, brand, cost, price, and stock.
+- Scanning barcodes directly into the product form for faster data entry.
 - Editing existing products.
 - Deleting products only when they are not tied to historical sales.
 - Validating category and brand consistency before saving.
@@ -51,6 +53,7 @@ Important business rule:
 The sales page is built around a cashier workflow:
 
 - Product search from a dedicated search panel.
+- Barcode scanning support to add products directly to the cart.
 - Real-time cart updates.
 - Quantity modification and item removal.
 - Payment method selection: cash, card, or transfer.
