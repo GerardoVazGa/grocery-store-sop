@@ -3,6 +3,7 @@ import { nowLocal } from "../../shared/utils/dateUtils.js"
 export function getCashCutSummary(db, cashCutId) {
     return db.prepare(`
         SELECT
+            cash_cuts.opening_amount AS openingAmount,
             COUNT(sales.id) AS totalSales,
             ROUND(SUM(sales.total), 2) AS totalAmount,
             ROUND(SUM(CASE WHEN sales.payment_method = 'cash' THEN sales.total ELSE 0 END), 2) AS totalCash,
@@ -10,11 +11,13 @@ export function getCashCutSummary(db, cashCutId) {
             ROUND(SUM(CASE WHEN sales.payment_method = 'transfer' THEN sales.total ELSE 0 END), 2) AS totalTransfer,
             MIN(sales.created_at) AS firstSaleTime,
             MAX(sales.created_at) AS lastSaleTime
-        FROM sales
-        WHERE sales.cash_cut_id = ?
+        FROM cash_cuts
+        LEFT JOIN sales
+            ON sales.cash_cut_id = cash_cuts.id
+        WHERE cash_cuts.id = ?
+        GROUP BY cash_cuts.id
     `).get(cashCutId)
 }
-
 export function getCashCutSales(db, cashCutId) {
     return db.prepare(`
         SELECT
