@@ -161,12 +161,3 @@ npm run electron:build
 - Multi-store synchronization or cloud backup
 
 These items are roadmap ideas and are not part of the current implementation.
-
----
-
-If you want, I can:
-- Create `docs/screenshots/` with placeholder images.
-- Add a sample `.env.example` describing the variables above (no secrets).
-- Extract and document specific validation locations (for example `createSaleService` in `electron/features/sales/sales.services.js`).
-
-Which of these should I do next? (e.g., create `docs/screenshots/` with placeholders)
