@@ -23,7 +23,7 @@ export function CashCutsPage() {
 
     const isLoading = isLoadingCashCutsSummary || salesLoading
 
-    const handleCloseCashCut = async (countedCash) => {
+    const handlerCloseCashCut = async ({countedCash}) => {
         await closeCashCut(countedCash)
         setShowModal(false)
     }
@@ -72,7 +72,7 @@ export function CashCutsPage() {
                 showModal && (
                     <CloseCashCutModal 
                         summary={cashCutsSummary} 
-                        onConfirm={handleCloseCashCut} 
+                        onConfirm={handlerCloseCashCut} 
                         onCancel={() => setShowModal(false)} 
                         isClosing={isClosing} 
                     />
