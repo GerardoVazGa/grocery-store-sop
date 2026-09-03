@@ -9,7 +9,7 @@ function App() {
 
     useEffect(() => {
         checkActiveCashCut()
-    }, [])
+    }, [checkActiveCashCut])
 
     if (isLoading) return (
         <div className="min-h-screen bg-primary-bg flex items-center justify-center">

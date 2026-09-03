@@ -52,6 +52,7 @@ export const useCashCutStore = create((set, get) => ({
 
     reset: async () => {
         try {
+            set({ isReopening: true, error: null })
             const { lastClosedCashCutId } = get()
 
             if(lastClosedCashCutId) {
