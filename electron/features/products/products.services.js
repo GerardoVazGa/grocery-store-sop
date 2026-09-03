@@ -84,7 +84,7 @@ export function deleteProductService(db, id) {
 
     const hasSales = db.prepare(
         `
-            SELECT COUNT (*) as count FROM sales_products
+            SELECT COUNT (*) as count FROM sale_items
             WHERE product_id = ?
         `
     ).get(id)
