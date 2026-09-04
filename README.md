@@ -20,6 +20,26 @@ Abarrotes POS is a desktop point-of-sale application for small retail stores. It
 
 > Note: The above list reflects functionality implemented in the repository. The project does not implement multi-user sync, external providers, or advanced inventory flows.
 
+## Screenshots
+
+### Main POS Screen
+![POS Interface](docs/screenshots/pos.png)
+
+### Payment Method Selection
+![Payment Screen](docs/screenshots/pos-payment.png)
+
+### Inventory Management
+![Inventory Management](docs/screenshots/inventory.png)
+
+### Dashboard Summary
+![Dashboard Summary](docs/screenshots/dashboard-summary.png)
+
+### Dashboard Analytics
+![Dashboard Analytics](docs/screenshots/dashboard-analytics.png)
+
+### Cash Cut Management
+![Cash Cuts](docs/screenshots/cash-cuts.png)
+
 ## Technology stack
 - Frontend: React, Vite
 - Desktop runtime: Electron
@@ -69,6 +89,15 @@ Brief responsibilities:
 ### Expected cash calculation
 - Displayed expected cash (session total) = `opening_amount + cash sales`.
 - Card and transfer payments are excluded from the expected cash calculation.
+
+## Barcode Scanning
+
+The application supports multiple barcode scanning methods:
+
+- **Camera-based scanning** (`@ericblade/quagga2`): Uses the device's webcam to scan barcodes directly in the application interface.
+- **External scanner devices**: Compatible with USB barcode scanners and other connected scanning devices. The scanner simulates keyboard input, which the application captures automatically when adding products to a sale.
+
+Both methods integrate seamlessly into the product search and cart creation workflow. The barcode value is captured and matched against the product database to retrieve and add items to the current sale.
 
 ## Business rules observed in the code
 Only rules enforced by the current implementation (repository or service layer):
