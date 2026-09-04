@@ -15,12 +15,15 @@ export function DailySummary() {
     if (error) return <div className="bg-surface rounded-xl p-6 text-danger text-sm">Error al cargar</div>
     if (!dailySummary) return null
 
+    console.log(dailySummary)
+
     const stats = [
         { label: "Total vendido", value: `$${Number(dailySummary.totalRevenue ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}`, accent: true },
         { label: "Ventas", value: dailySummary.totalSales ?? 0 },
-        { label: "Ticket promedio", value: `$${Number(dailySummary.averageSale ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
-        { label: "Efectivo", value: `$${Number(dailySummary.cashRevenue ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
-        { label: "Tarjeta", value: `$${Number(dailySummary.cardRevenue ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
+        { label: "Ticket promedio", value: `$${Number(dailySummary.averageSales ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
+        { label: "Efectivo", value: `$${Number(dailySummary.totalCash ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
+        { label: "Tarjeta", value: `$${Number(dailySummary.totalCard ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
+        { label: "Transferencia", value: `$${Number(dailySummary.totalTransfer ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2 })}` },
     ]
 
     return (
